@@ -5,36 +5,52 @@ $(document).ready(function () {
     $("#hsin_isaccomodationrequired").change(function () { contentRetrieve(this) });
     $("#hsin_iscabservicerequired").change(function () { contentRetrieve(this) });
     $("#hsin_islunchrequired").change(function () { contentRetrieve(this) });
+    $("#hsin_aadhar").attr("maxlength",12)
     $("#hsin_aadhar").hide();
     $("#hsin_aadhar_label").hide();
-    $("#hsin_aadhar").attr("maxlength",12)
+    //makeFieldRequiredIfVisible();
+    var validatorAadhar = document.getElementById('RequiredFieldValidatorhsin_aadhar');
+    console.log(validatorAadhar);
+    ValidatorEnable(validatorAadhar,false);
+    //validatorAadhar.enabled = false;
     $("#hsin_nationality").change(function () {
+        var selectedValue=$(this).val();
         $(".checkbox").removeAttr("title");
-        if ($(this).val() == "c5418510-883a-ee11-bdf4-000d3af2e28f") {
+        if (selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f") {
             $("#hsin_aadhar").show();
-            $("#hsin_aadhar_label").show();       
-            $("#hsin_aadhar").change(function(){ validateInput(this)});
+            $("#hsin_aadhar_label").show();
+            // $("#RequiredFieldValidatorhsin_aadhar").enabled = true;
+            //ValidatorEnable(validatorAadhar, true);
+            validatorAadhar.enabled = true;
+            validatorAadhar.errormessage = "Aadhar is required.";
+            
         }
         else {
             $("#hsin_aadhar").hide();
-            $("#hsin_aadhar_label").hide();
+            $("#hsin_aadhar_label").hide();    
+            //$("#RequiredFieldValidatorhsin_aadhar").enabled = false;
+            //ValidatorEnable(validatorAadhar, false);
+            validatorAadhar.enabled = false;
+            validatorAadhar.isvalid = true;
+            validatorAadhar.errormessage = "";
         }
-    })
+        //ValidatorEnable(validatorAadhar, selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f");
+        //makeFieldRequiredIfVisible();
+    });
+    // $("#InsertButton").click(function (e) {
+    //     if (customClientValidate()) {
+    //         clearIsDirty();
+    //         disableButtons();
+    //         this.value = 'Processing...';
+    //         // Perform your custom form submission logic here
+    //         e.preventDefault(); // Prevent default form submission
+    //     }
+    // });
+    //$("#hsin_aadhar").change(function(){ validateInput(this)});
 });
 
-function validateInput(this){
-    var maxlen = parseInt(this.getAttribute("maxlength"));
-    var inputValue = this.value;
-
-    var regex = new  RegExp(`^.{1,${maxLength}}$`);
-    if(!regex.test(inputValue)){
-        alert("Input length cannot exceed " + maxlen + " characters!");
-        this.value=inputValue.substring(1,maxlen);
-    }
-
-}
-
 function onDisplayChange() {
+    debugger;
     var checkItem = $('#hsin_coursetype').find("option:selected").text();
     var sectionsToShow = [
         '#hsin_islaptoprequired',
@@ -109,3 +125,34 @@ function contentRetrieve(context) {
         });
     }
 }
+
+function makeFieldRequiredIfVisible() {
+    debugger;
+    var field = $("#hsin_aadhar"); 
+    if (field.is(":visible")) {
+      field.prop("required", true);
+    } else {
+      field.prop("required", false);
+    }
+}
+
+// function customClientValidate() {
+//     // Perform your custom client-side validation logic here
+//     var isValid = true; // Set this to true if validation passes
+//     return isValid;
+// }
+
+// function validateInput(element){
+//     debugger;
+//     var maxlen = parseInt(element.getAttribute("maxlength"));
+//     var inputValue = element.value;
+
+//     var regex = /^\d{1,12}$/;
+//     if(!regex.test(inputValue)){
+//         alert("Invalid Aadhar Number");
+//         element.value=inputValue.substring(0,maxlen);
+//     }
+
+// }
+
+  

@@ -5,36 +5,80 @@ $(document).ready(function () {
     $("#hsin_isaccomodationrequired").change(function () { contentRetrieve(this) });
     $("#hsin_iscabservicerequired").change(function () { contentRetrieve(this) });
     $("#hsin_islunchrequired").change(function () { contentRetrieve(this) });
+    $("#hsin_aadhar").attr("maxlength", 12)
     $("#hsin_aadhar").hide();
     $("#hsin_aadhar_label").hide();
-    $("#hsin_aadhar").attr("maxlength",12)
+    if (window.jQuery) {
+        (function ($) {
+            $(document).ready(function () {
+                if (typeof Page_Validators == "undefined") return;
+                // Create new validator
+                var newValidator = document.createElement("span");
+                newValidator.style.display = "none";
+                newValidator.id = "Required_hsin_aadhar";
+                newValidator.controltovalidate = "hsin_aadhar";
+                newValidator.errormessage =
+                    "<a href='#hsin_aadhar_label'>Aadhar is required</a>";
+                newValidator.validationGroup = ""; // Set this if you have set ValidationGroup on the form
+                newValidator.initialvalue = "";
+                newValidator.evaluationfunction = function () {
+                    var country = $("#hsin_nationality").val();
+                    debugger;
+                    if (country == "c5418510-883a-ee11-bdf4-000d3af2e28f" && !$("#hsin_aadhar").val()) {
+                        debugger;
+                        $("#hsin_aadhar_label").addClass("required-field");
+                        return false;
+                    }
+                    else {
+                        $("#hsin_aadhar_label").removeClass("required-field");
+                        return true;
+                    }
+                };
+                // Add the new validator to the page validators array:
+                Page_Validators.push(newValidator);
+                // Wire-up the click event handler of the validation summary link
+                $("a[href='#hsin_aadhar_label']").on("click", function () {
+                    scrollToAndFocus("hsin_aadhar_label", "hsin_aadhar");
+                });
+            });
+            var cssStyle = document.createElement("style");
+            cssStyle.type = "text/css";
+            cssStyle.innerHTML = ".required-field::after { content: '*'; color: red; margin-right: 5px; }";
+            document.head.appendChild(cssStyle);
+        })(window.jQuery);
+    }
+    for (i in Page_Validators) {
+        console.log(Page_Validators[i]);
+    }
     $("#hsin_nationality").change(function () {
+        var selectedValue = $(this).val();
         $(".checkbox").removeAttr("title");
-        if ($(this).val() == "c5418510-883a-ee11-bdf4-000d3af2e28f") {
+        if (selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f") {
             $("#hsin_aadhar").show();
-            $("#hsin_aadhar_label").show();       
-            $("#hsin_aadhar").change(function(){ validateInput(this)});
+            $("#hsin_aadhar_label").show();
+            // $("#RequiredFieldValidatorhsin_aadhar").enabled = true;
+            //ValidatorEnable(validatorAadhar, true);
+            // validatorAadhar.enabled = true;
+            // validatorAadhar.errormessage = "Aadhar is required.";
+
         }
         else {
             $("#hsin_aadhar").hide();
             $("#hsin_aadhar_label").hide();
+            //$("#RequiredFieldValidatorhsin_aadhar").enabled = false;
+            //ValidatorEnable(validatorAadhar, false);
+            // validatorAadhar.enabled = false;
+            // validatorAadhar.isvalid = true;
+            // validatorAadhar.errormessage = "";
         }
-    })
+        //ValidatorEnable(validatorAadhar, selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f");
+        //makeFieldRequiredIfVisible();
+    });
+    //$("#hsin_aadhar").change(function(){ validateInput(this)});
 });
 
-function validateInput(this){
-    var maxlen = parseInt(this.getAttribute("maxlength"));
-    var inputValue = this.value;
-
-    var regex = new  RegExp(`^.{1,${maxLength}}$`);
-    if(!regex.test(inputValue)){
-        alert("Input length cannot exceed " + maxlen + " characters!");
-        this.value=inputValue.substring(1,maxlen);
-    }
-
-}
-
 function onDisplayChange() {
+    debugger;
     var checkItem = $('#hsin_coursetype').find("option:selected").text();
     var sectionsToShow = [
         '#hsin_islaptoprequired',
@@ -109,3 +153,27 @@ function contentRetrieve(context) {
         });
     }
 }
+
+// function makeFieldRequiredIfVisible() {
+//     debugger;
+//     var field = $("#hsin_aadhar");
+//     if (field.is(":visible")) {
+//         field.prop("required", true);
+//     } else {
+//         field.prop("required", false);
+//     }
+// }
+
+// function validateInput(element){
+//     debugger;
+//     var maxlen = parseInt(element.getAttribute("maxlength"));
+//     var inputValue = element.value;
+
+//     var regex = /^\d{1,12}$/;
+//     if(!regex.test(inputValue)){
+//         alert("Invalid Aadhar Number");
+//         element.value=inputValue.substring(0,maxlen);
+//     }
+
+// }
+
