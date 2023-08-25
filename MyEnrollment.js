@@ -27,12 +27,9 @@ $(document).ready(function () {
                     var country = $("#hsin_nationality").val();
                     //debugger;
                     if (country == "c5418510-883a-ee11-bdf4-000d3af2e28f" && !$("#hsin_aadhar").val()) {
-                        //debugger;
-                        //$("#hsin_aadhar_label").addClass("required-field");
                         return false;
                     }
                     else {
-                        //$("#hsin_aadhar_label").removeClass("required-field");
                         return true;
                     }
                 };
@@ -43,10 +40,6 @@ $(document).ready(function () {
                     scrollToAndFocus("hsin_aadhar_label", "hsin_aadhar");
                 });
             });
-            // var cssStyle = document.createElement("style");
-            // cssStyle.type = "text/css";
-            // cssStyle.innerHTML = ".required-field::after { content: '*'; color: red; margin-right: 5px; }";
-            // document.head.appendChild(cssStyle);
         })(window.jQuery);
     }
 
@@ -58,25 +51,13 @@ $(document).ready(function () {
             $("#hsin_aadhar_label").show();
             var test = $("#hsin_aadhar");
             console.log(test);
-            // $("#RequiredFieldValidatorhsin_aadhar").enabled = true;
-            //ValidatorEnable(validatorAadhar, true);
-            // validatorAadhar.enabled = true;
-            // validatorAadhar.errormessage = "Aadhar is required.";
         }
         else {
             $("#hsin_aadhar").hide();
             $("#hsin_aadhar_label").hide();
             $("#hsin_aadhar").val("");
-            //$("#RequiredFieldValidatorhsin_aadhar").enabled = false;
-            //ValidatorEnable(validatorAadhar, false);
-            // validatorAadhar.enabled = false;
-            // validatorAadhar.isvalid = true;
-            // validatorAadhar.errormessage = "";
         }
-        //ValidatorEnable(validatorAadhar, selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f");
-        //makeFieldRequiredIfVisible();
     });
-    //$("#hsin_aadhar").change(function(){ validateInput(this)});
 });
 
 function onDisplayChange() {
@@ -155,27 +136,4 @@ function contentRetrieve(context) {
         });
     }
 }
-
-// function makeFieldRequiredIfVisible() {
-//     debugger;
-//     var field = $("#hsin_aadhar");
-//     if (field.is(":visible")) {
-//         field.prop("required", true);
-//     } else {
-//         field.prop("required", false);
-//     }
-// }
-
-// function validateInput(element){
-//     debugger;
-//     var maxlen = parseInt(element.getAttribute("maxlength"));
-//     var inputValue = element.value;
-
-//     var regex = /^\d{1,12}$/;
-//     if(!regex.test(inputValue)){
-//         alert("Invalid Aadhar Number");
-//         element.value=inputValue.substring(0,maxlen);
-//     }
-
-// }
 
