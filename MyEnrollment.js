@@ -8,8 +8,31 @@ $(document).ready(function () {
     $("#hsin_aadhar").attr("maxlength", 12)
     $("#hsin_aadhar").hide();
     $("#hsin_aadhar_label").hide();
+    var element = document.querySelector(".columnBlockLayout");
+    element.style.marginTop = "0"; 
     var aadharLabel = document.getElementById("hsin_aadhar_label");
     aadharLabel.innerHTML += '<span style="color: red;"> *</span>';
+    var message = document.getElementById("ValidationSummaryEntityFormControl_84906d9e5bbf4093825fc5c93d2a0fbd_EntityFormView");
+    console.log(message);
+    message.remove();
+    console.log(Page_Validators);
+    var successMessage = $("#MessagePanel");
+    successMessage.remove();
+    successMessage.css({
+        "float": "left",
+        "margin-left": "20px" // Add some margin for spacing
+    });
+    $(".actions").append(message,successMessage);
+    // if (areAllValidatorsValid()) {
+    //     // All validators are valid, perform desired action
+    //     var successMessage = $("<div>").addClass("success-message").text("Form submitted successfully!");
+    //     $(".actions").append(successMessage);
+    // } else {
+    //     // There are validation errors, handle accordingly
+    //     $(".actions").append(message);
+    // }
+    $("#EntityFormControl_84906d9e5bbf4093825fc5c93d2a0fbd_EntityFormView input[type='text'],#EntityFormControl_84906d9e5bbf4093825fc5c93d2a0fbd_EntityFormView select,#EntityFormControl_84906d9e5bbf4093825fc5c93d2a0fbd_EntityFormView input[type='email']").val("");   
+
     if (window.jQuery) {
         (function ($) {
             $(document).ready(function () {
@@ -45,6 +68,7 @@ $(document).ready(function () {
 
     $("#hsin_nationality").change(function () {
         var selectedValue = $(this).val();
+        $("input").prop("checked", false);
         $(".checkbox").removeAttr("title");
         if (selectedValue == "c5418510-883a-ee11-bdf4-000d3af2e28f") {
             $("#hsin_aadhar").show();
@@ -136,4 +160,17 @@ function contentRetrieve(context) {
         });
     }
 }
+
+// function areAllValidatorsValid() {
+//     for (var i = 0; i < Page_Validators.length; i++) {
+//         if (!Page_Validators[i].isValid) {
+//             return false; // At least one validator is not valid
+//         }
+//     }
+//     return true; // All validators are valid
+// }
+
+// Usage
+
+
 
